@@ -1,5 +1,5 @@
 # laravel-lu
-Docker container for Liberty University Laravel Apps
+LU's latest and greatest dev environment! Now with 100% more Laravel!
 
      docker run -it -v /path/to/project:/var/www/laravel -p 80:80 laravel-lu
 

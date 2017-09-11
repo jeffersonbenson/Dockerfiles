@@ -2,21 +2,21 @@ version: '3.3'
 
 services:
     wordpress:
-        image: wordpress
-        #build: Wordpress/
+        #image: wordpress
+        build: Wordpress/
         depends_on:
             - db
+        restart: always
         ports:
             - 8080:80
         environment:
+            WORDPRESS_DB_HOST: db
+            WORDPRESS_DB_NAME: wordpress
+            WORDPRESS_DB_USER: root
             WORDPRESS_DB_PASSWORD: example
 
     db:
+        #restart: unless-stopped
         image: mysql:5.7
         environment:
             MYSQL_ROOT_PASSWORD: example
-        healthcheck:
-            test: ["CMD", "curl", "-f", "http://localhost:3306"]
-            interval: 30s
-            timeout: 10s
-            retries: 5

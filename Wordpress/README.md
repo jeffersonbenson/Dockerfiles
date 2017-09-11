@@ -1,4 +1,3 @@
-README.md
 # Welcome to Docker!
 #### If you're reading this, it means that we've somehow been able to get this amazing technology into your hands, and (hopefully) will be able to speed up your development time by an incredible amount.
 

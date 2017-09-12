@@ -15,12 +15,14 @@ So back in the day when the cargo industry was getting off the ground, we quickl
 
 # Ok, so how do I use it?
 1. Install [Docker](www.docker.com)
-2. Optional: If you're on linux you'll need to install Docker-Compose separately. Otherwise, carry on.
+    * Optional: If you're on linux you'll need to install Docker-Compose separately. Otherwise, carry on.
 3. Download the files and open a terminal in that folder
 4. Run `docker-compose up`. Hopefully you'll get a message saying `apache2 -D FOREGROUND`
-- Visit `LOCALHOST:8000/wp-admin/install.php` to install Wordpress. Depending on your machine, LOCALHOST might be a different IP. For example, a windows box will be 192.168.99.100 in most cases. Other machines might use 0.0.0.0 or simply localhost.
-- After Wordpress is installed, run `docker exec -it wordpress_wordpress_1 /var/www/html/postscript.sh` to install all the necessary themes and plugins.
-- That's it. No, seriously, That's it.
+5. Visit `LOCALHOST:8080/wp-admin/install.php` to install Wordpress.
+    * Depending on your machine, LOCALHOST might be a different IP. For example, a windows box will be 192.168.99.100 in most cases. Other machines might use 0.0.0.0 or simply localhost.
+6. After Wordpress is installed, run `docker exec -it wordpress_wordpress_1 /var/www/html/postscript.sh` to install all the necessary themes and plugins.
+    * If you get an error, you may need to run `docker exec -it wordpress_wordpress_1 chmod +x /var/www/html/postscript.sh`
+7. That's it. No, seriously, That's it.
 
 # What if something breaks?
 If something breaks during the above process, let me know.

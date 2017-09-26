@@ -1,0 +1,13 @@
+version: '3.3'
+
+services:
+    laravel:
+        image: jeffersonbenson/laravel-lu
+        #build: .
+        ports:
+            - 80:80
+        volumes:
+            - /home/jeff/Docker/laravelTEST:/var/www/laravel
+        environment:
+            #Set to DEV, TEST, or PROD
+            APP_ENV: DEV

@@ -1,14 +1,16 @@
-FROM php:7-apache
+FROM php:7.1-apache
 MAINTAINER Jeff Benson <jbenson14@liberty.edu>
 
 #basic installation of necessities + PHP framework
 RUN apt update && apt full-upgrade -y && \
-	apt install -y bash \
-	curl \
+ 	apt install -y \
+	bash \
 	build-essential \
+	curl \
 	gcc \
 	git \
 	libaio1 \
+	libzip-dev \
 	nodejs \
 	npm \
 	unzip \
@@ -18,12 +20,18 @@ RUN curl -sS https://getcomposer.org/installer | php && \
 	mv composer.phar /usr/local/bin/composer && \
 	ln -s ~/.composer/vendor/bin/* /usr/local/bin/
 
+#Running Laravel Proper
+RUN pecl install zip && \
+	docker-php-ext-enable zip
+RUN composer global require 'laravel/installer'
+#RUN composer create-project laravel/laravel /var/www/laravel
+
 #Installing Oracle Instant Client
 COPY instantclient_12_*.zip ./
 RUN unzip instantclient_12_2.zip -d /usr/local/ && \
 	unzip instantclient_12_sdk.zip -d /usr/local && \
-	 ln -s /usr/local/instantclient_12_2 /usr/local/instantclient && \
-	 ln -s /usr/local/instantclient_12_2/libclntsh.so.12.1 /usr/local/instantclient_12_2/libclntsh.so
+	ln -s /usr/local/instantclient_12_2 /usr/local/instantclient && \
+	ln -s /usr/local/instantclient_12_2/libclntsh.so.12.1 /usr/local/instantclient_12_2/libclntsh.so
 
 ENV ORACLE_BASE /usr/local/instantclient
 ENV LD_LIBRARY_PATH /usr/local/instantclient
@@ -34,10 +42,6 @@ RUN echo 'instantclient,/usr/local/instantclient' | pecl install oci8 && \
 	docker-php-ext-enable oci8 && \
 	pecl install pdo_sqlsrv && \
 	docker-php-ext-enable pdo_sqlsrv
-
-#Running Laravel Proper
-RUN composer global require 'laravel/installer'
-#RUN composer create-project laravel/laravel /var/www/laravel
 
 EXPOSE 80 443
 
